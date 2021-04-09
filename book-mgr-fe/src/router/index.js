@@ -9,7 +9,21 @@ const routes = [
   {
     path: "/",
     name: "BasicLayout",
-    component: () => import(/* webpackChunkName: "auth" */ "../layout/BasicLayout/index.vue")
+    component: () =>
+      import(/* webpackChunkName: "BasicLayout" */ "../layout/BasicLayout/index.vue"),
+    children: [
+      {
+        path: "books",
+        name: "Books",
+        component: () => import(/* webpackChunkName: "Book" */ "../views/Books/index.vue")
+      },
+      {
+        path: "books/:id",
+        name: "BookDetail",
+        component: () =>
+          import(/* webpackChunkName: "BookDetail" */ "../views/BookDetail/index.vue")
+      }
+    ]
   }
 ];
 

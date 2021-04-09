@@ -24,3 +24,23 @@ export const result =(response,authShowErrorMsg=true)=>{
         },
     };
 };
+
+export const clone = (obj)=>{
+ return JSON.parse(JSON.stringify(obj));
+};
+const tsPadStart=(str)=>{
+   str=String(str);//传入的str有可能是数字，要转换成字符串
+   return str.padStart(2,'0');
+};
+//格式化时间戳
+
+export const formatTimestamp = (ts)=>{
+   const date= new Date(Number(ts));
+   const YYYY=date.getFullYear();
+   const MM= tsPadStart(date.getMonth()+1);
+   const DD=tsPadStart(date.getDate());
+   const hh=tsPadStart(date.getHours());
+   const mm=tsPadStart(date.getMinutes());
+   const ss=tsPadStart(date.getSeconds());
+   return `${YYYY}/${MM}/${DD} ${hh}:${mm}:${ss}`;
+};

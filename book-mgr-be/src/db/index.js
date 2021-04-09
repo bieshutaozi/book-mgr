@@ -1,5 +1,7 @@
 require("./Schemas/User");
 require("./Schemas/InviteCode");
+require("./Schemas/Book");
+require("./Schemas/InventoryLog");
 const mongoose = require("mongoose");
 const connect = async () => {
   return new Promise((resolve) => {
