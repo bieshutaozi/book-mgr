@@ -6,15 +6,31 @@ const router = new Router({
 });
 router.get('/list',async(ctx)=>{
  const{
-     type,
+     type, 
+ }=ctx.query;
+
+ let{
      size,
      page,
  }=ctx.query;
+
+ size=Number(size);
+ page=Number(page);
  const list=await InventoryLog.find({
      type,
+ }).sort({
+     _id:-1,
  }).skip((page-1)*size).limit(size).exec();
+ const total=await InventoryLog.find({
+     type,
+ }).countDocuments().exec();
  ctx.body={
-     data:list,
+     data:{
+         total,
+         list,
+         page,
+         size,
+     },
      code:1,
      msg:'获取列表成功',
  };

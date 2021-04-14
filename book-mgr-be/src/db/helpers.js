@@ -1,3 +1,5 @@
+const e = require("express");
+
 const getMeta = () => {
   return {
     createdAt: {
@@ -11,6 +13,17 @@ const getMeta = () => {
   };
 };
 
+const preSave=function(next){
+   if(this.isNew){
+     const ts=Date.now();
+     this['meta'].createdAt=ts;
+     this['meta'].updatedAt=ts;
+   }else{
+     this['meta'].updatedAt=Date.now();
+   }
+};
+
 module.exports = {
  getMeta,
+ preSave,
 };

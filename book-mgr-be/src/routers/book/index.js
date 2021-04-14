@@ -34,13 +34,7 @@ router.post("/add", async (ctx) => {
   });
   
   const res = await book.save();
-  const log=new InventoryLog({
-    num,type,
-  });
-
-  console.log(log);
-
-  log.save();
+  
   
 
   ctx.body = {
@@ -69,6 +63,9 @@ router.get('/list',async(ctx)=>{
   }
   const list =await Book
   .find(query)
+  .sort({
+    _id:-1,
+  })
   .skip((page-1)*size)
   .limit(size)
   .exec();
@@ -135,6 +132,12 @@ router.post('/update/count',async(ctx)=>{
     return;
   }
   const res = await book.save();
+  const log = new InventoryLog({
+    num,
+    type,
+  });
+
+  log.save();
   ctx.body = {
     data: res,
     code: 1,
@@ -150,7 +153,7 @@ router.post('/update',async(ctx)=>{
     // author,
     // publishDate,
     // classify,
-    //剩余参数，代替name,price...
+    //剩余参数，代替nxame,price...
     ...others
   } = ctx.request.body;
   
@@ -174,7 +177,7 @@ router.get('/detail/:id',async(ctx)=>{
   const{
     id,
   }=ctx.params;
-  
+  const one = await findBookOne(id);
   if (!one) {
     ctx.body = {
       msg: "没有找到书籍",
